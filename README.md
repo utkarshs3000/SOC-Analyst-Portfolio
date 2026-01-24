@@ -2,7 +2,7 @@
 # SOC ANALYST / DEFENSE PORTFOLIO
 ---
 
-**OPERATOR** :: [Your Name]
+**OPERATOR** :: [Utkarsh Soni]
 **ROLE** :: SOC Analyst / Security Engineer
 **STATUS** :: [ IN-PROGRESS ]
 
