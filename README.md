@@ -30,11 +30,12 @@ This repository documents the end-to-end deployment of a **Security Operations C
 | **Resources** | 4 vCPU / 4GB RAM | Optimized for Elasticsearch processes |
 | **Network** | Bridged Adapter | Simulation of Enterprise LAN access |
 
-<img width="1920" height="1080" alt="Screenshot 2026-01-24 215038" src="https://github.com/user-attachments/assets/6fca1111-3070-4428-baa1-2f1a72dacdb6" />
+<img width="1920" height="1080" alt="Screenshot 2026-01-24 214753" src="https://github.com/user-attachments/assets/5c9cff3e-2bb1-40f7-9e7f-cbb93160ff70" />
+
 
 ### 1.2 DEPLOYMENT VERIFICATION
 **STATUS** :: [ COMPLETED ]
 
 *Successful initialization of the Ubuntu Server kernel and SSH remote access verification.*
 
-<img width="1920" height="1080" alt="Screenshot 2026-01-24 214753" src="https://github.com/user-attachments/assets/5c9cff3e-2bb1-40f7-9e7f-cbb93160ff70" />
+<img width="1920" height="1080" alt="Screenshot 2026-01-24 215038" src="https://github.com/user-attachments/assets/e5529f03-9d30-437a-aae4-08161a3a7194" />
