@@ -1,73 +1,76 @@
-# Watchtower: Enterprise Security Operations Center (SOC)
+# THE WATCHTOWER // ALG_SEC_GRID
 
-**Status:** ✅ Operational
-**Version:** Wazuh 4.14.2
-**Architecture:** Distributed (Single-Node Cluster Simulation)
+STATUS    :: OPERATIONAL
+VERSION   :: WAZUH 4.14.2
+CLEARANCE :: LVL_5 [ARCHITECT]
 
-## 📖 Overview
-**Watchtower** is a centralized Security Information and Event Management (SIEM) system built on the Wazuh platform. It acts as the "nervous system" for the trading infrastructure, providing real-time threat detection, integrity monitoring, and incident response for the algorithmic trading bot network.
+────────────────────────────────────────────────────────────────────────────────
 
-Unlike standard deployments, Watchtower was engineered to run on a resource-constrained environment, requiring significant custom configuration to bypass standard dependency locks and race conditions.
+## 01 // MISSION PROFILE
 
-## 🏗️ Architecture Stack
-The cluster consists of four distinct, integrated components:
-1.  **The Brain (Wazuh Manager):** Analyzes incoming telemetry and triggers alerts.
-2.  **The Memory (Wazuh Indexer):** High-performance search engine (OpenSearch) for long-term data retention.
-3.  **The Courier (Filebeat):** Secure pipeline transporting encrypted data from Manager to Indexer.
-4.  **The Face (Wazuh Dashboard):** Visual analytics interface for threat hunting and "Green/Red" status monitoring.
+The Watchtower is the central nervous system protecting the algorithmic trading infrastructure. In high-frequency environments, system integrity is as critical as capital preservation.
 
----
+This is a specialized Security Operations Center (SOC) engineered to detect anomalies, intrusion attempts, and operational failures across the bot network before P&L impact. It runs on a custom distributed-style architecture, stabilized against race conditions and resource constraints.
 
-## 🛠️ Engineering Log: Critical Challenges & Solutions
-*During the deployment of the Watchtower Security Cluster, we encountered and resolved several high-priority infrastructure blockers. This log documents the troubleshooting protocols used to stabilize the system.*
+────────────────────────────────────────────────────────────────────────────────
 
-### 1. The Dependency Race Condition ("The Zombie Lock")
-* **Issue:** The Wazuh Manager and Filebeat services entered a crash loop upon startup.
-* **Root Cause:** A system-level Race Condition occurred where the `apt` package manager was locked by a background process, and the Filebeat service attempted to connect to the Indexer before the database was fully initialized ("Green" status).
-* **Solution:**
-    * Manually terminated zombie lock files (`/var/lib/dpkg/lock`).
-    * Forced a dependency integrity check (`dpkg --configure -a`).
-    * Implemented a "Wait-for-Green" protocol: verified the Indexer API response via `curl` before releasing the Manager service.
+## 02 // ARCHITECTURE [STACK]
 
-### 2. The Permission Trap ("Shell Expansion Failure")
-* **Issue:** Critical SSL certificates failed to transfer to the Dashboard directory, resulting in `Permission Denied` errors even when executed with `sudo`.
-* **Technical Insight:** The shell attempted to expand the wildcard (`*`) in `cp /certs/*` *before* applying `sudo` privileges. Since the unprivileged user had no read access to the source folder, the command failed pre-execution.
-* **Solution:**
-    * Bypassed shell expansion by copying files **explicitly by name** (Root CA, Admin Cert, Admin Key).
-    * Strictly defined ownership (`chown wazuh-dashboard`) and applied "Read-Only" permissions (`chmod 400`) to secure the credentials.
+The grid is composed of four integrated sub-systems running on a single node:
 
-### 3. The Version Mismatch Crisis (4.9 vs 4.14)
-* **Issue:** The Dashboard UI crashed with a persistent `Application Not Found` error.
-* **Root Cause:** Legacy configuration documentation pointed the Dashboard to a deprecated startup path (`/app/wazuh`) and attempted to inject an incompatible plugin version (4.9) into the modern 4.14.2 engine.
-* **Solution:**
-    * Executed a **"Scorched Earth" Purge**: completely removed the Dashboard package and configuration files.
-    * Reinstalled clean 4.14.2 binaries.
-    * Rewrote the `opensearch_dashboards.yml` configuration to target the modern route: `uiSettings.overrides.defaultRoute: /app/wz-home`.
+[01] THE BRAIN [MANAGER]
+     >> Command center. Analyzes real-time telemetry and triggers decision logic.
 
-### 4. The "Ghost" Log & Hash Collision
-* **Issue:** The Dashboard failed to authenticate with the Database, despite correct credentials.
-* **Root Cause:** The internal password hashing script (`hash.sh`) failed silently due to Java environment permission restrictions, writing a null/corrupted hash into the internal user database.
-* **Solution:**
-    * Performed a "Root-Force" fix by exporting the Java home path explicitly within the `sudo` context (`sudo -E`).
-    * Generated a valid BCrypt hash and forcibly injected it into the internal user table using the security admin tool.
+[02] THE MEMORY [INDEXER]
+     >> OpenSearch engine. Immutable storage for event history and audit trails.
 
----
+[03] THE NERVOUS SYSTEM [FILEBEAT]
+     >> Encrypted pipeline shipping serialized data from edge to core.
 
-## 🚀 Access & Usage
+[04] THE FACE [DASHBOARD]
+     >> Visual War Room. 10.10.1.8.
 
-### Dashboard Access
-* **URL:** `https://10.10.1.8`
-* **Default Route:** `/app/`
-* **Status:** Secure (SSL Enabled)
-<img width="1920" height="1080" alt="Screenshot 2026-01-26 135038" src="https://github.com/user-attachments/assets/965b5dbf-bf2c-442e-9fd1-936ad998f568" />
+────────────────────────────────────────────────────────────────────────────────
 
----
+## 03 // ENGINEERING LOG [POST_MORTEM]
 
-## 🔮 Roadmap: "Operation First Eyes"
-The immediate next phase is to deploy **Wazuh Agents** to the trading infrastructure.
+Deployment required bypassing standard dependency locks and resolving critical race conditions. The following infrastructure blockers were neutralized:
 
-* [ ] **Agent Deployment:** Install lightweight agents on the Trading Bot Host.
-* [ ] **Log Integration:** Configure agents to ingest Python trading logs (execution errors, API latency).
-* [ ] **Custom Alerting:** Create rules to trigger alerts on "Abnormal Trading Volume" or "API Disconnection."
+// INCIDENT 01 :: THE ZOMBIE LOCK [RACE_CONDITION]
+   [!] THREAT   : System paralysis. Manager/Filebeat crash loop due to dependency lock.
+   [>] RESPONSE : Terminated `dpkg` zombie processes. Implemented "Wait-for-Green" boot protocol to synchronize stack initialization.
 
----
+// INCIDENT 02 :: THE PERMISSION TRAP
+   [!] THREAT   : Security lockout. SSL certificate rejection blocking Dashboard UI.
+   [>] RESPONSE : Discovered shell expansion failure in `sudo` context. Bypassed via manual injection of Root CA/Admin Keys with strict `chmod 400` permissions.
+
+// INCIDENT 03 :: THE 4.9 CRISIS [VERSION_CONFLICT]
+   [!] THREAT   : UI Failure / "Application Not Found".
+   [>] RESPONSE : "Scorched Earth" protocol. Purged incompatible 4.9 plugins. Recompiled optimization bundles for 4.14 engine. Redirected UI route to `/app/wz-home`.
+
+// INCIDENT 04 :: THE GHOST HASH
+   [!] THREAT   : Authentication Breach. Admin password rejected by Indexer.
+   [>] RESPONSE : Root-Force Injection. Generated BCrypt hash external to the Java environment; manually implanted into internal user database.
+
+────────────────────────────────────────────────────────────────────────────────
+
+## 04 // LIVE STATUS & ACCESS
+
+:: WAR ROOM URL  : https://10.10.1.8
+:: PROTOCOL      : HTTPS [INTERNAL_GRID]
+:: PRIMARY USER  : admin
+
+<img width="1920" height="1080" alt="Screenshot 2026-01-26 135038" src="https://github.com/user-attachments/assets/f9068564-7f25-4777-8a21-739879ea43e2" />
+
+
+────────────────────────────────────────────────────────────────────────────────
+
+## 05 // NEXT OBJECTIVE: "OPERATION FIRST EYES"
+
+The infrastructure is stable. Implementation phases:
+
+[ ] PHASE 1 : Deploy Agents to Trading Bot Host.
+[ ] PHASE 2 : Ingest Python Trade Logs [Execution Latency & Error Tracking].
+[ ] PHASE 3 : Configure "Dead Man Switch" for bot heartbeat.
+
+>> "WE DON'T GUESS. WE VERIFY."
