@@ -1,7 +1,5 @@
 // Project 2: The Detection Lab
 
-### ## Project Overview
-
 In this project, I set up a professional monitoring system to catch "hackers" in real-time. I used **Sysmon** to record every move made on a Windows 10 computer and sent those records to **Wazuh**, a central security dashboard (SIEM). This setup is the foundation of a modern Security Operations Center (SOC).
 
 ---
