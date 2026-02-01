@@ -11,9 +11,9 @@ ___
 
 While deploying the agent via PowerShell, I encountered an error where the `Wazuh` service would not start.
 
-  >> The Issue: A mismatch in the filename variable in the `msiexec` command caused the installer to fail silently.
-  >> The Fix: I manually verified the download path in `$env:tmp`, corrected the file extension, and re-executed the installation with Administrator privileges.
-  >> Result: The service successfully registered as `Wazuh` and began communicating with the manager at `10.10.1.8`.
+ The Issue: A mismatch in the filename variable in the `msiexec` command caused the installer to fail silently.
+ The Fix: I manually verified the download path in `$env:tmp`, corrected the file extension, and re-executed the installation with Administrator privileges.
+ Result: The service successfully registered as `Wazuh` and began communicating with the manager at `10.10.1.8`.
 
 ## 03 // Evidence of Success
 
