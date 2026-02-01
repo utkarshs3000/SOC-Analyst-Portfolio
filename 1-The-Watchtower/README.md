@@ -2,7 +2,7 @@
 
 STATUS    :: OPERATIONAL
 VERSION   :: WAZUH 4.14.2
-CLEARANCE :: LVL_5 [ARCHITECT]
+
 
 ────────────────────────────────────────────────────────────────────────────────
 
