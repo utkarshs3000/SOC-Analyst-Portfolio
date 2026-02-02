@@ -135,4 +135,6 @@ Using a Kali Linux attacker machine, I executed an obfuscated PowerShell payload
 * **Temporal Drift**: Identified a 6-hour timezone offset between the server and the browser, resolved by adjusting the Dashboard temporal window to "Last 24 Hours."
 * **Automation**: Implemented a **Cron Job** to run the ingestion script every 60 seconds, ensuring a real-time data feed without relying on the failed Filebeat service.
 
+  After this, I established a personal relation with ERRORS...
+
 ---
