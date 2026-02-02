@@ -60,6 +60,8 @@ To bypass the "Filebeat Bottleneck," I engineered a **Direct-to-API Python Pipel
 <img width="1920" height="1080" alt="Screenshot 2026-01-31 220359" src="https://github.com/user-attachments/assets/7f01a7d0-0fd9-4fc6-b399-493ea4a07a8e" />
 
 
+---
+
  
 <img width="1920" height="1080" alt="Screenshot 2026-01-31 223645" src="https://github.com/user-attachments/assets/0ebd1fdc-b94b-4356-aa46-1ccca74a8fcc" />
 
