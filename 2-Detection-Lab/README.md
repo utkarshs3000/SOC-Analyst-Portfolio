@@ -40,8 +40,6 @@ The Symptom: Filebeat service "talked" to the server but the Dashboard remained 
 
 The Technical Fix: Cleared the corrupted Filebeat registry (/var/lib/filebeat/registry), which allowed the shipper to re-index the local alerts.json.
 
-Result: The Wazuh Indexer successfully generated new indices for February 2026, enabling the creation of the wazuh-alerts-* index pattern in the Dashboard.
-
 ## Infrastructure Recovery & Engineering
 
 The Problem
